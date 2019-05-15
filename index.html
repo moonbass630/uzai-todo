@@ -28,7 +28,15 @@
 				</template>
 			</form>
 		</main>
-		<button class="btn"><i class="fas fa-plus"></i></button>
+		<button class="btn">
+			<i class="fas fa-plus"></i>
+		</button>
+		<div class="area-add">
+			<form @submit.prevent="addTodo">
+				<input type="text" v-model="newTodo">
+				<button><i class="fas fa-paper-plane"></i></button>
+			</form>
+		</div>
 		<pre>			
 			FinishedToto:{{aFinishedTodo}}<br>
 			Toto:{{aTodo}}

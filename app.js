@@ -6,6 +6,7 @@
 
 		el: '#app',
 		data: {
+			newTodo: '',
 			aTodo: [{
 				title: '入金する',
 				isActive: false,
@@ -13,6 +14,11 @@
 				isNoEdit: true
 			},{
 				title: 'カープをみにいく',
+				isActive: false,
+				isDone: false,
+				isNoEdit: true
+			},{
+				title: '大きな声でこんにちはって言う',
 				isActive: false,
 				isDone: false,
 				isNoEdit: true
@@ -40,6 +46,17 @@
 			},
 			deleteTodo: function(index){
 				this.aTodo.splice(index, 1);
+			},
+			addTodo: function(){
+				let todo = {
+					title: this.newTodo,
+					isActive: false,
+					isDone: false,
+					isNoEdit: true
+				}
+
+				this.aTodo.push(todo);
+				this.newTodo = '';
 			}
 		}
 
