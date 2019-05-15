@@ -18,22 +18,23 @@
 		<main>
 			<form>
 				<template v-for="(todo, index) in aTodo">
-					<div class="todo-wrap" :class="{active: todo.isActive}" @click="toggleActive(index)">
-						<div class="todo">
-							<input type="text" :class="{noedit: todo.isNoEdit}" :value="todo.title" disabled>
-						</div>
-						<div class="operation">
-							<span class="done" @click.stop="done(index)"><i class="fas fa-check"></i></span>
-							<span class="edit" @click.stop="toggleEdit(index)"><i class="fas fa-edit"></i></span>
+					<div class="todo-wrap">
+						<div class="todo" :class="{active: todo.isActive}">
+							<input type="checkbox" @click.stop="done(index)">
+							<input type="text" :class="{noedit: todo.isNoEdit}" :value="todo.title" @click.stop="toggleEdit(index), toggleActive(index)">
 							<span class="del" @click.stop="deleteTodo(index)"><i class="fas fa-times"></i></span>
 						</div>
 					</div>
 				</template>
 			</form>
-			FinishedToto:{{aFinishedTodo}}
 		</main>
 		<button class="btn"><i class="fas fa-plus"></i></button>
+		<pre>			
+			FinishedToto:{{aFinishedTodo}}<br>
+			Toto:{{aTodo}}
+		</pre>
 	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="app.js"></script>
 	<script src="main.js"></script>
