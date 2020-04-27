@@ -8,42 +8,86 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
 		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Signika" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 		<title>UZAI-TODO</title>
 </head>
 <body>
 	<div id="app" class="container">
+		<v-app>
 		<header>
 			<h1>UZAI-TODO</h1>
 		</header>
 		<main>
 			<form>
 				<template v-for="(todo, index) in aTodo">
-					<div class="todo-wrap">
-						<div class="todo" :class="{active: todo.isActive}">
-							<input type="checkbox" @click.stop="done(index)">
-							<input type="text" :class="{noedit: todo.isNoEdit}" :value="todo.title" @click.stop="toggleEdit(index), toggleActive(index)">
-							<span class="del" @click.stop="deleteTodo(index)"><i class="fas fa-times"></i></span>
-						</div>
+					<div class="todo d-flex align-center" :class="{active: todo.isActive}">
+						<v-checkbox class="mb-0" v-model="checkbox" @click.stop="done(index)"></v-checkbox>
+						<p class="mb-0">{{todo.title}}</p>
+						<!-- <input type="text" :class="{noedit: todo.isNoEdit}" :value="todo.title" @click.stop="toggleEdit(index), toggleActive(index)"> -->
+						<!-- <span class="del" @click.stop="deleteTodo(index)"><i class="fas fa-times"></i></span> -->
 					</div>
-				</template>
-			</form>
-		</main>
-		<button class="btn">
-			<i class="fas fa-plus"></i>
-		</button>
-		<div class="area-add">
-			<form @submit.prevent="addTodo">
-				<input type="text" v-model="newTodo">
-				<button><i class="fas fa-paper-plane"></i></button>
-			</form>
-		</div>
-		<pre>			
-			FinishedToto:{{aFinishedTodo}}<br>
-			Toto:{{aTodo}}
-		</pre>
-	</div>
 
+					<v-divider></v-divider>
+				</template>
+				</form>
+			</main>
+		<v-container fluid>
+			<v-btn v-show="!hidden" color="pink" absolute bottom right fab @click="sheet = !sheet">
+				<v-icon>mdi-plus</v-icon>
+			</v-btn>
+		</v-container>
+		
+		<v-bottom-sheet v-model="sheet">
+			<v-sheet class="text-center pa-5" height="200px">
+				<v-text-field label="Insert Todo" v-model="newTodo"></v-text-field>
+				<div class="d-flex align-center">
+					<div class="d-flex align-center">
+
+						<div class="text-center mr-3">
+							<v-btn small rounded color="primary" dark>今日</v-btn>
+						</div>
+						<div class="text-center mr-3">
+							<v-btn small rounded color="danger" dark>明日</v-btn>
+						</div>
+						<v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date"
+							transition="scale-transition" offset-y min-width="290px">
+							<template v-slot:activator="{ on }">
+								<v-text-field v-model="date" label="Set expiration" prepend-icon="mdi-calendar" readonly v-on="on"></v-text-field>
+							</template>
+	
+							<v-date-picker v-model="date" no-title scrollable>
+								<v-spacer></v-spacer>
+								<v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+								<v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+							</v-date-picker>
+							
+						</v-menu>
+					</div>
+					<v-icon class="ml-auto" @click="addTodo">mdi-send</v-icon>
+				</div>
+
+			</v-sheet>
+		</v-bottom-sheet>
+		<v-overlay :value="overlay">
+			<v-btn icon @click="overlay = false">
+				<v-icon>mdi-close</v-icon>
+			</v-btn>
+			<v-card class="mx-auto" max-width="90vw">
+				<v-img src="./img/uzai-01.jpg"></v-img>
+				<v-card-title class="pb-0">え？それで終わり？ｗ</v-card-title>
+				<div class="text-center">
+					<v-btn rounded color="primary" @click="nextTodo" dark>Next Todo</v-btn>
+				</div>
+			
+			</v-card>
+		</v-overlay>
+	</v-app>
+	</div>
+	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 	<script src="app.js"></script>
 	<script src="main.js"></script>
 </body>

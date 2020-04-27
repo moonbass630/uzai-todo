@@ -55,7 +55,6 @@ input[type="text"]{
 	clear: both;
 	padding: 10px 6px;
 	box-sizing: border-box;
-	border-bottom: 1px solid #ccc;
 }
 
 .del{

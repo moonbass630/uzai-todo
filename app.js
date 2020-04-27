@@ -1,29 +1,33 @@
 (function(){
-
 	'use strict';
 
 	var em = new Vue({
-
 		el: '#app',
+		vuetify: new Vuetify(),
 		data: {
 			newTodo: '',
 			aTodo: [{
 				title: '入金する',
+				expiration: '2020-04-20', 
 				isActive: false,
 				isDone: false,
 				isNoEdit: true
 			},{
 				title: 'カープをみにいく',
+				expiration: '2020-04-20', 
 				isActive: false,
 				isDone: false,
 				isNoEdit: true
 			},{
 				title: '大きな声でこんにちはって言う',
+				expiration: '2020-04-20', 
 				isActive: false,
 				isDone: false,
 				isNoEdit: true
 			}],
-			aFinishedTodo: []
+			aFinishedTodo: [],
+			sheet: false,
+			overlay: false
 		},
 		methods: {
 			done: function(index){
@@ -34,6 +38,11 @@
 				});
 				this.pushToFinished(oFinishedTodo);
 				this.aTodo.splice(index, 1);
+
+				if(this.aTodo.length == false){
+					this.overlay = true;
+				}
+
 			},
 			pushToFinished: function (oFinishedTodo){
 				this.aFinishedTodo.push(oFinishedTodo);
@@ -57,8 +66,14 @@
 
 				this.aTodo.push(todo);
 				this.newTodo = '';
+			},
+			nextTodo: function(){
+				this.overlay = false;
+				this.sheet = true;
 			}
 		}
 
 	});
 })();
+
+
