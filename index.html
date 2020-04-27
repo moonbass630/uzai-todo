@@ -24,7 +24,10 @@
 				<template v-for="(todo, index) in aTodo">
 					<div class="todo d-flex align-center" :class="{active: todo.isActive}">
 						<v-checkbox class="mb-0" v-model="checkbox" @click.stop="done(index)"></v-checkbox>
-						<p class="mb-0">{{todo.title}}</p>
+						<div>
+							<p class="mb-0">{{todo.title}}</p>
+							<small class="d-block">{{todo.expiration}}</small>
+						</div>
 						<!-- <input type="text" :class="{noedit: todo.isNoEdit}" :value="todo.title" @click.stop="toggleEdit(index), toggleActive(index)"> -->
 						<!-- <span class="del" @click.stop="deleteTodo(index)"><i class="fas fa-times"></i></span> -->
 					</div>
